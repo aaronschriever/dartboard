@@ -1,0 +1,33 @@
+#dartboard_back
+{ position: absolute;
+	background-color: black;
+	height: 600px;
+	width: 600px;
+    border-radius: 300px;
+}
+
+#inner_ring
+{position: relative;
+    height: 80%;
+    width: 80%;
+    border-radius: 50%;
+    top: 10%;
+    left:10%;
+    background-color: #ffffcc;
+    
+    
+}
+#twenty
+{
+    position: absolute
+        top:55px;
+        left:55px;
+    
+}
+#dartboard
+{
+    height: 600px;
+    width: 600px;
+    position: absolute;
+            top:0px;
+}
