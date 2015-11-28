@@ -10,6 +10,7 @@ var sectionSize = 240;
 var i = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
+var fadeSpeed = 300;
 //TODO 
 /*
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
@@ -53,13 +54,13 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 		mouseover: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
-			}, 500);
+			}, fadeSpeed);
 			//$("selectionID").append(treble_ID);
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
-			}, 500);
+			}, fadeSpeed);
 		//	$("#selectionID").empty();
 		},
 		click: function (layer) {
@@ -89,19 +90,17 @@ function makeDouble(id, double_ID, doubleSize, strokeColor) {
 		mouseover: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
-			}, 500);
-			/*$("#selectionID").append(double_ID);
-			$("#selectionID").append("score" + section_score[id]);
-			*/
+			}, fadeSpeed);
+			
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
-			}, 500);
-			//$("#selectionID").empty();
+			}, fadeSpeed);
+			
 		},
 		click: function (layer) {
-		//	$("#score").append("score" + section_score[id] * 2);
+		
 			addScore(section_score[id] * 2);
 		}
 	});
@@ -127,19 +126,18 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 		
 		mouseover: function (layer) {
 			$(this).animateLayer(layer, {
-				fillStyle: 'blue'
-			}, 500);
-		//	$("#selectionID").append("<br/>" + section_ID);
-		//	$("#selectionID").append("score" + section_score[id]);
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+		
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: fillColor
-			}, 500);
-			//$("#selectionID").empty();
+			}, fadeSpeed);
+			
 		},
 		click: function (layer) {
-		//	$("#score").append("score" + section_score[id] + "<br/>");
+		
 			addScore(section_score[id]);
 		}
 	});
@@ -192,13 +190,13 @@ function createBullseye() {
 		mouseover: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
-			}, 500);
+			}, fadeSpeed);
 			
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'green'
-			}, 500);
+			}, fadeSpeed);
 			
 		},
 		click: function (layer) {
@@ -221,13 +219,13 @@ function createBullseye() {
 		mouseover: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
-			}, 500);
+			}, fadeSpeed);
 			
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'red'
-			}, 500);
+			}, fadeSpeed);
 			
 		},
 		click: function (layer) {
