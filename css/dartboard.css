@@ -18,24 +18,11 @@
     
 }
 
-#current_selection
-{	position: relative;
-	top: 0px;
-	float: right;
-	height: 50px;
-}
+
 
 	
 }
-#twenty_area
-{
-    position: absolute
-        top:55px;
-        left:55px;
-	width:200px;
-	height: 200px;
-    
-}
+
 #dartboard
 {
     height: 600px;
@@ -43,4 +30,23 @@
     position: absolute;
             top:0px;
 }
+#score
+{ 	top: 1em;
+	float: right;
+	color:azure;
+	text-align: center;
+	background-color: black;
+	font-size: 2em;
+	height: 6em;
+	width: 4em;
+	border-radius: 1em;
+	border-color: black;
+	border-style: groove;
+padding-top: 1em;
+}
 
+body
+{
+	background-color: darkred;
+	font-family: 'Oswald', sans-serif;
+}

@@ -9,7 +9,7 @@ var doubleSize = 230;
 var sectionSize = 240;
 var i = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
-var currentScore=[];
+var currentScore = [];
 //TODO 
 /*
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
@@ -20,7 +20,22 @@ function toRadians(deg) {
     "use strict";
 	return deg * Math.PI / 180;
 }
-
+/*
+*Make the treble section of the dartboard and add interactivity. 
+*/
+function addScore(score) {
+	"use strict";
+	if (currentScore.length < 3) {
+		currentScore.push(score);
+	}
+	$("#dart1").empty();
+	$("#dart2").empty();
+	$("#dart3").empty();
+	$("#dart1").append(currentScore[0]);
+	$("#dart2").append(currentScore[1]);
+	$("#dart3").append(currentScore[2]);
+	
+}
 function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 	"use strict";
 	$('canvas').drawArc({
@@ -39,20 +54,24 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
 			}, 500);
-			$("selectionID").append(treble_ID);
+			//$("selectionID").append(treble_ID);
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, 500);
-			$("#selectionID").empty();
+		//	$("#selectionID").empty();
 		},
 		click: function (layer) {
-			  $("#score").append("score" + section_score[id]*3);
-			  }
+	//		$("#score").append("score" + section_score[id] * 3);
+			addScore(section_score[id] * 3);
+		}
 	});
 	
 }
+/*
+*Make the double section of the dartboard and add interactivity. 
+*/
 function makeDouble(id, double_ID, doubleSize, strokeColor) {
 	"use strict";
 	$('canvas').drawArc({
@@ -71,22 +90,25 @@ function makeDouble(id, double_ID, doubleSize, strokeColor) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
 			}, 500);
-			$("#selectionID").append(double_ID);
+			/*$("#selectionID").append(double_ID);
 			$("#selectionID").append("score" + section_score[id]);
-			
+			*/
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, 500);
-			$("#selectionID").empty();
+			//$("#selectionID").empty();
 		},
 		click: function (layer) {
-			  $("#score").append("score" + section_score[id]*2);
-			  }
-			});
+		//	$("#score").append("score" + section_score[id] * 2);
+			addScore(section_score[id] * 2);
+		}
+	});
 }
-
+/*
+*Make the section section of the dartboard and add interactivity. 
+*/
 function makeSection(id, section_ID, sectionSize, fillColor) {
 	"use strict";
 	$('canvas').drawSlice({
@@ -107,21 +129,25 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'blue'
 			}, 500);
-			$("#selectionID").append("<br/>" + section_ID);
-			$("#selectionID").append("score" + section_score[id]);
+		//	$("#selectionID").append("<br/>" + section_ID);
+		//	$("#selectionID").append("score" + section_score[id]);
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: fillColor
 			}, 500);
-			$("#selectionID").empty();
+			//$("#selectionID").empty();
 		},
 		click: function (layer) {
-			  $("#score").append("score" + section_score[id]);
-			  }
+		//	$("#score").append("score" + section_score[id] + "<br/>");
+			addScore(section_score[id]);
+		}
 	});
 	
 }
+/*
+* Create sections and add to dartboard. 
+*/
 
 function createSegments() {
 	"use strict";
@@ -143,44 +169,76 @@ function createSegments() {
 	}
 	
 }
+/*
+* Create the bull!
+*/
 
 function createBullseye() {
 	"use strict";
-	context.beginPath();
-	context.moveTo(cx, cy);
-	context.arc(cx, cy, 20, toRadians(0), toRadians(360), false);
-	context.closePath();
-	context.lineWidth = 1;
-	context.fillStyle = 'green';
-	context.fill();
+	
+	$('canvas').drawArc({
+		name: 'bullseye25',
+		data: '50',
+		layer: true,
+		groups: ['bull'],
+		
+		x: cx,
+		y: cy,
+		strokeWidth: 2,
+		fillStyle: 'green',
+		radius: 20,
+		start: 1,
+		end: 360,
+		mouseover: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, 500);
+			
+		},
+		mouseout: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: 'green'
+			}, 500);
+			
+		},
+		click: function (layer) {
+			addScore(50);
+		}
+	});
+	$('canvas').drawArc({
+		name: 'bullseye50',
+		data: '50',
+		layer: true,
+		groups: ['bull'],
+		strokeStyle: 'red',
+		x: cx,
+		y: cy,
+		strokeWidth: 1,
+		fillStyle: 'red',
+		radius: 10,
+		start: 1,
+		end: 360,
+		mouseover: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, 500);
+			
+		},
+		mouseout: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: 'red'
+			}, 500);
+			
+		},
+		click: function (layer) {
+			addScore(50);
+		}
+	});
 
-	context.beginPath();
-	context.moveTo(cx, cy);
-	context.arc(cx, cy, 10, toRadians(0), toRadians(360), false);
-	context.closePath();
-	context.lineWidth = 1;
-	context.fillStyle = 'red';
-	context.fill();
 }
+
+
 createSegments();
 
 createBullseye();
 
-/*context.beginPath();
-
-context.moveTo(cx,cy);
-context.arc(cx, cy, 300, toRadians(261), toRadians(279), false);
-context.closePath();
-context.lineWidth = 5;
-context.fillStyle = 'black';
-context.fill();
-
-context.beginPath();
-
-context.moveTo(cx,cy);
-context.arc(cx, cy, 300, toRadians(297), toRadians(315), false);
-context.closePath();
-context.lineWidth = 5;
-context.fillStyle = 'black';
-context.fill();
-*/
