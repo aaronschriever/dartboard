@@ -17,11 +17,23 @@
     
     
 }
-#twenty
+
+#current_selection
+{	position: relative;
+	top: 0px;
+	float: right;
+	height: 50px;
+}
+
+	
+}
+#twenty_area
 {
     position: absolute
         top:55px;
         left:55px;
+	width:200px;
+	height: 200px;
     
 }
 #dartboard
@@ -31,3 +43,4 @@
     position: absolute;
             top:0px;
 }
+
