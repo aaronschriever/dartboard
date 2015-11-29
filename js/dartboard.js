@@ -32,9 +32,11 @@ function addScore(score) {
 	$("#dart1").empty();
 	$("#dart2").empty();
 	$("#dart3").empty();
+	$("#total").empty();
 	$("#dart1").append(currentScore[0]);
 	$("#dart2").append(currentScore[1]);
 	$("#dart3").append(currentScore[2]);
+	$("#total").append(currentScore[0] + currentScore[1] + currentScore[2]);
 	
 }
 function makeTreble(id, treble_ID, trebleSize, strokeColor) {
@@ -55,7 +57,7 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
 			}, fadeSpeed);
-			//$("selectionID").append(treble_ID);
+			
 		},
 		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
@@ -64,7 +66,7 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 		//	$("#selectionID").empty();
 		},
 		click: function (layer) {
-	//		$("#score").append("score" + section_score[id] * 3);
+	
 			addScore(section_score[id] * 3);
 		}
 	});
@@ -118,7 +120,7 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 		strokeStyle: fillColor,
 		x: cx,
 		y: cy,
-		strokeWidth: 1,
+		strokeWidth: 0,
 		fillStyle: fillColor,
 		radius: sectionSize,
 		start: startDegs,
@@ -128,6 +130,7 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
 			}, fadeSpeed);
+		//	drawNumbers();
 		
 		},
 		mouseout: function (layer) {
@@ -176,10 +179,9 @@ function createBullseye() {
 	
 	$('canvas').drawArc({
 		name: 'bullseye25',
-		data: '50',
+		data: '25',
 		layer: true,
 		groups: ['bull'],
-		
 		x: cx,
 		y: cy,
 		strokeWidth: 2,
@@ -200,7 +202,7 @@ function createBullseye() {
 			
 		},
 		click: function (layer) {
-			addScore(50);
+			addScore(25);
 		}
 	});
 	$('canvas').drawArc({
@@ -235,8 +237,20 @@ function createBullseye() {
 
 }
 
-
+function drawNumbers() {
+	"use strict";
+	$('canvas').drawText({
+  	fillStyle: '#ccc',
+  	strokeStyle: '#fff',
+  	strokeWidth: 1,
+  	x: 300, y: 30,
+  	fontSize: '30pt',
+  	fontFamily: 'Oswald',
+  	text: '20'
+	});
+}
 createSegments();
 
 createBullseye();
+//drawNumbers();
 

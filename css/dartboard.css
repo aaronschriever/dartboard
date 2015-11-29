@@ -18,10 +18,121 @@
     
 }
 
-
-
+.numbers
+{	position:absolute;
+	color: white;
+	font-size: 2em;
+	height: 0px;
+}
+#one
+{
+	left: 397px;	
+	top: 1px;
+	transform: rotate(17deg)
+}
+#two
+{
+	left: 425px;
+	top: 475px;
+	transform: rotate(-35deg)
+}
+#three
+{
+	top: 515px;
+	left: 300px;
 	
 }
+#four{
+	left:551px;
+	top: 108px;
+	transform: rotate(48deg)
+}
+#five{
+	left: 200px;
+	top: 5px;
+	transform: rotate(-20deg);
+	
+}
+#six{
+	
+	left: 620px;
+	top: 310px;
+	transform: rotate(90deg)
+}
+#seven{
+	left: 180px;
+	top: 479px;
+transform: rotate(30deg)
+}
+#eight{
+	top: 370px;
+	left: 100px;
+	transform: rotate(72deg)
+}
+#nine{
+	top: 120px;
+	left: 40px;
+	transform: rotate(-52deg)
+}
+#ten{
+	left: 490px;
+	top: 375px;
+	transform: rotate(-70deg)
+	
+}
+#eleven{
+	top: 310px;
+	left: -23px;
+	transform: rotate(-90deg)
+}
+#twelve{
+	left: 105px;	
+	top: 55px;
+	transform: rotate(-37deg)
+}
+#thirteen{
+	left:600px;
+	top: 208px;
+	transform: rotate(69deg)
+}
+#fourteen{
+	left:-10px;
+	top: 208px;
+	transform: rotate(-69deg)
+}
+#fifteen{
+	left: 460px;
+	top: 435px;
+	transform: rotate(-54deg)
+}
+#sixteen{
+	left: 123px;
+	top: 430px;
+	transform: rotate(54deg)
+}
+#seventeen{
+	left: 360px;
+	top: 507px;
+	transform: rotate(-18deg)
+}
+#eighteen
+{
+	left:481px;
+	top: 48px;
+	transform: rotate(37deg);
+}
+#nineteen{
+	left: 225px;
+	top: 507px;
+	transform: rotate(18deg)
+}
+#twenty
+{
+	
+	left:290px;
+	top:-10px;
+}	
+
 
 #dartboard
 {
