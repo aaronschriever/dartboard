@@ -26,111 +26,111 @@
 }
 #one
 {
-	left: 397px;	
-	top: 1px;
+	left: 385px;	
+	top: 30px;
 	transform: rotate(17deg)
 }
 #two
 {
-	left: 425px;
-	top: 475px;
+	left: 438px;
+	top: 505px;
 	transform: rotate(-35deg)
 }
 #three
 {
-	top: 515px;
-	left: 300px;
+	top: 550px;
+	left: 295px;
 	
 }
 #four{
-	left:551px;
-	top: 108px;
-	transform: rotate(48deg)
+	left:520px;
+	top: 128px;
+	transform: rotate(53deg)
 }
 #five{
 	left: 200px;
-	top: 5px;
+	top: 35px;
 	transform: rotate(-20deg);
 	
 }
 #six{
 	
-	left: 620px;
-	top: 310px;
+	left: 572px;
+	top: 300px;
 	transform: rotate(90deg)
 }
 #seven{
-	left: 180px;
-	top: 479px;
+	left: 150px;
+	top: 508px;
 transform: rotate(30deg)
 }
 #eight{
-	top: 370px;
-	left: 100px;
+	top: 375px;
+	left: 55px;
 	transform: rotate(72deg)
 }
 #nine{
-	top: 120px;
-	left: 40px;
+	top: 135px;
+	left: 65px;
 	transform: rotate(-52deg)
 }
 #ten{
-	left: 490px;
-	top: 375px;
+	left: 525px;
+	top: 380px;
 	transform: rotate(-70deg)
 	
 }
 #eleven{
-	top: 310px;
-	left: -23px;
+	top: 300px;
+	left: 10px;
 	transform: rotate(-90deg)
 }
 #twelve{
-	left: 105px;	
-	top: 55px;
+	left: 115px;	
+	top: 75px;
 	transform: rotate(-37deg)
 }
 #thirteen{
-	left:600px;
-	top: 208px;
+	left:555px;
+	top: 210px;
 	transform: rotate(69deg)
 }
 #fourteen{
-	left:-10px;
-	top: 208px;
+	left:20px;
+	top: 210px;
 	transform: rotate(-69deg)
 }
 #fifteen{
-	left: 460px;
-	top: 435px;
+	left: 490px;
+	top: 445px;
 	transform: rotate(-54deg)
 }
 #sixteen{
-	left: 123px;
-	top: 430px;
+	left: 80px;
+	top: 445px;
 	transform: rotate(54deg)
 }
 #seventeen{
-	left: 360px;
-	top: 507px;
+	left: 370px;
+	top: 540px;
 	transform: rotate(-18deg)
 }
 #eighteen
 {
-	left:481px;
-	top: 48px;
+	left:450px;
+	top: 70px;
 	transform: rotate(37deg);
 }
 #nineteen{
-	left: 225px;
-	top: 507px;
+	left: 210px;
+	top: 540px;
 	transform: rotate(18deg)
 }
 #twenty
 {
 	
-	left:290px;
-	top:-10px;
+	left:285px;
+	top:18px;
 }	
 
 
@@ -159,22 +159,23 @@ transform: rotate(30deg)
 #score
 { 	min-height: 6em;
 	position: absolute;
+	top: 1em;
 	text-align: center;
 	width: inherit;
 }
 #resetButtonContainer
 { position: absolute;
 	float: right;
-	top: 11em;
+	top: 12.5em;
 	width: 8em;
 	height: 4em;
-	right: 0.6em;
+	right: 0em;
 }
 #resetButton
 {	background-color: black;
 	color:azure;
 	font-size: 2em;
-	height: 1.6em;
+	height: 1em;
 	width: 100%;
 	border-radius: 1em;
 	text-align: center;
