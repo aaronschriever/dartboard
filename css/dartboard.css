@@ -155,6 +155,7 @@ transform: rotate(30deg)
 	border-style: groove;
 	color:azure;
 	top: 0em;
+	right: 0.5em;
 }
 #score
 { 	min-height: 6em;
@@ -169,15 +170,17 @@ transform: rotate(30deg)
 	top: 12.5em;
 	width: 8em;
 	height: 4em;
-	right: 0em;
+	right: 1em;
 }
 #resetButton
 {	background-color: black;
 	color:azure;
-	font-size: 2em;
+	font-size: 2.0em;
 	height: 1em;
 	width: 100%;
 	border-radius: 1em;
+	padding-top:  0.5em;
+	padding-bottom: 0.5em;
 	text-align: center;
 }
 body
