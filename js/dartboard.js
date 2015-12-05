@@ -17,29 +17,19 @@ var sectionWidth = 40;
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
 */
 
-$(document).ready(function(){
-	$("#resetButton").mouseover(function() {
-		$(this).css("background-color", "#ccc");
-	});
-	$("#resetButton").mouseleave(function() {
-		$(this).css("background-color", "black");
-	});
-	$("#resetButton").click(function() {
-		resetScore();
-	});
-});
 function toRadians(deg) {
     "use strict";
 	return deg * Math.PI / 180;
 }
 
 function resetScore() {
-	currentScore =[];
-		$("#dart1").empty();
+	"use strict";
+	currentScore = [];
+	$("#dart1").empty();
 	$("#dart2").empty();
 	$("#dart3").empty();
 	$("#total").empty();
-	}
+}
 /*
 *Make the treble section of the dartboard and add interactivity. 
 */
@@ -255,20 +245,20 @@ function createBullseye() {
 	});
 
 }
-/*
-function drawNumbers() {
+
+$(document).ready(function () {
 	"use strict";
-	$('canvas').drawText({
-  	fillStyle: '#ccc',
-  	strokeStyle: '#fff',
-  	strokeWidth: 1,
-  	x: 300, y: 30,
-  	fontSize: '30pt',
-  	fontFamily: 'Oswald',
-  	text: '20'
+	$("#resetButton").mouseover(function () {
+		$(this).css("background-color", "#ccc");
 	});
-}
-*/
+	$("#resetButton").mouseleave(function () {
+		$(this).css("background-color", "black");
+	});
+	$("#resetButton").click(function () {
+		resetScore();
+	});
+});
+
 createSegments();
 
 createBullseye();
