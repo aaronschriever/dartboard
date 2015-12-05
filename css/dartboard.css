@@ -141,23 +141,50 @@ transform: rotate(30deg)
     position: absolute;
             top:0px;
 }
-#score
-{ 	top: 1em;
+#scoreContainer
+{	
+	position: relative;
+		height: 6em;
+	width: 4em;
 	float: right;
-	color:azure;
 	text-align: center;
 	background-color: black;
 	font-size: 2em;
-	height: 6em;
-	width: 4em;
 	border-radius: 1em;
 	border-color: black;
 	border-style: groove;
-padding-top: 1em;
+	color:azure;
+	top: 0em;
 }
-
+#score
+{ 	min-height: 6em;
+	position: absolute;
+	text-align: center;
+	width: inherit;
+}
+#resetButtonContainer
+{ position: absolute;
+	float: right;
+	top: 11em;
+	width: 8em;
+	height: 4em;
+	right: 0.6em;
+}
+#resetButton
+{	background-color: black;
+	color:azure;
+	font-size: 2em;
+	height: 1.6em;
+	width: 100%;
+	border-radius: 1em;
+	text-align: center;
+}
 body
 {
 	background-color: darkred;
 	font-family: 'Oswald', sans-serif;
+}
+.red
+{
+	background-color: darkred;
 }

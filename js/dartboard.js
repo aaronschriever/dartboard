@@ -4,23 +4,42 @@ var cx = 300;
 var cy = 300;
 var startDegs = -9;
 var endDegs = 9;
-var trebleSize = 140;
-var doubleSize = 230;
+var trebleSize = 120;
+var doubleSize = 220;
 var sectionSize = 240;
 var i = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
 var fadeSpeed = 300;
+var sectionWidth = 40;
 //TODO 
 /*
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
 */
 
-
+$(document).ready(function(){
+	$("#resetButton").mouseover(function() {
+		$(this).css("background-color", "#ccc");
+	});
+	$("#resetButton").mouseleave(function() {
+		$(this).css("background-color", "black");
+	});
+	$("#resetButton").click(function() {
+		resetScore();
+	});
+});
 function toRadians(deg) {
     "use strict";
 	return deg * Math.PI / 180;
 }
+
+function resetScore() {
+	currentScore =[];
+		$("#dart1").empty();
+	$("#dart2").empty();
+	$("#dart3").empty();
+	$("#total").empty();
+	}
 /*
 *Make the treble section of the dartboard and add interactivity. 
 */
@@ -49,7 +68,7 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 		strokeStyle: strokeColor,
 		x: cx,
 		y: cy,
-		strokeWidth: 20,
+		strokeWidth: sectionWidth,
 		radius: trebleSize,
 		start: startDegs,
 		end: endDegs,
@@ -85,7 +104,7 @@ function makeDouble(id, double_ID, doubleSize, strokeColor) {
 		strokeStyle: strokeColor,
 		x: cx,
 		y: cy,
-		strokeWidth: 20,
+		strokeWidth: sectionWidth,
 		radius: doubleSize,
 		start: startDegs,
 		end: endDegs,
@@ -186,7 +205,7 @@ function createBullseye() {
 		y: cy,
 		strokeWidth: 2,
 		fillStyle: 'green',
-		radius: 20,
+		radius: 40,
 		start: 1,
 		end: 360,
 		mouseover: function (layer) {
@@ -215,7 +234,7 @@ function createBullseye() {
 		y: cy,
 		strokeWidth: 1,
 		fillStyle: 'red',
-		radius: 10,
+		radius: 20,
 		start: 1,
 		end: 360,
 		mouseover: function (layer) {
@@ -236,7 +255,7 @@ function createBullseye() {
 	});
 
 }
-
+/*
 function drawNumbers() {
 	"use strict";
 	$('canvas').drawText({
@@ -249,8 +268,11 @@ function drawNumbers() {
   	text: '20'
 	});
 }
+*/
 createSegments();
 
 createBullseye();
 //drawNumbers();
+
+
 
