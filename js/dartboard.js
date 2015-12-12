@@ -7,6 +7,7 @@ var endDegs = 9;
 var trebleSize = 120;
 var doubleSize = 220;
 var sectionSize = 240;
+var blackEdge = 300;
 var i = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
@@ -182,6 +183,36 @@ function createSegments() {
 /*
 * Create the bull!
 */
+function createDartboardBorder() {
+	"use strict";
+	$('canvas').drawArc( {
+		x: cx,
+		y: cy,
+		radius: 290,
+		start: 1,
+		end: 360,
+	fillStyle: 'black',
+	shadowColor: '#000',
+   shadowBlur: 10,
+		closed: true,
+		layer: true,
+		mouseover: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			
+		},
+		mouseout: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+			
+		},
+		click: function (layer) {
+			addScore(0);
+		}
+	});
+}
 
 function createBullseye() {
 	"use strict";
@@ -195,7 +226,7 @@ function createBullseye() {
 		y: cy,
 		strokeWidth: 2,
 		fillStyle: 'green',
-		radius: 40,
+		radius: 50,
 		start: 1,
 		end: 360,
 		mouseover: function (layer) {
@@ -258,7 +289,7 @@ $(document).ready(function () {
 		resetScore();
 	});
 });
-
+createDartboardBorder();
 createSegments();
 
 createBullseye();
