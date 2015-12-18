@@ -9,10 +9,31 @@ var doubleSize = 220;
 var sectionSize = 240;
 var blackEdge = 300;
 var i = 0;
+var f = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
 var fadeSpeed = 300;
 var sectionWidth = 40;
+var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
+				   {"number" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
+				   {"number" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
+				   {"number" : "4", "xCoord" : "515", "yCoord" : "140", "rotationVal" : "55" },
+				   {"number" : "5", "xCoord" : "215", "yCoord" : "50", "rotationVal" : "-20" },
+				   {"number" : "6", "xCoord" : "565", "yCoord" : "300", "rotationVal" : "90" },
+				   {"number" : "7", "xCoord" : "145", "yCoord" : "515", "rotationVal" : "35" },
+				   {"number" : "8", "xCoord" : "45", "yCoord" : "380", "rotationVal" : "75" },
+				   {"number" : "9", "xCoord" : "80", "yCoord" : "150", "rotationVal" : "-52" },
+				   {"number" : "10", "xCoord" : "550", "yCoord" : "385", "rotationVal" : "-70" },
+				   {"number" : "11", "xCoord" : "35", "yCoord" : "300", "rotationVal" : "-90" },
+				   {"number" : "12", "xCoord" : "140", "yCoord" : "90", "rotationVal" : "-35" },
+				   {"number" : "13", "xCoord" : "550", "yCoord" : "215", "rotationVal" : "69" },
+				   {"number" : "14", "xCoord" : "45", "yCoord" : "215",  "rotationVal" : "-70" },
+				   {"number" : "15", "xCoord" : "510", "yCoord" : "460", "rotationVal" : "-55" },
+				   {"number" : "16", "xCoord" : "85", "yCoord" : "450", "rotationVal" : "55" },
+				   {"number" : "17", "xCoord" : "380", "yCoord" : "555", "rotationVal" : "-18" },
+				   {"number" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37" },
+				   {"number" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18" },
+				   {"number" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
 //TODO 
 /*
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
@@ -185,15 +206,15 @@ function createSegments() {
 */
 function createDartboardBorder() {
 	"use strict";
-	$('canvas').drawArc( {
+	$('canvas').drawArc({
 		x: cx,
 		y: cy,
 		radius: 290,
 		start: 1,
 		end: 360,
-	fillStyle: 'black',
-	shadowColor: '#000',
-   shadowBlur: 10,
+		fillStyle: 'black',
+		shadowColor: '#000',
+		shadowBlur: 10,
 		closed: true,
 		layer: true,
 		mouseover: function (layer) {
@@ -276,7 +297,20 @@ function createBullseye() {
 	});
 
 }
-
+function drawNumbers(number, xCoord, yCoord, rotationVal) {
+	"use strict";
+	$('canvas').drawText({
+		fontFamily: 'Oswald, sans-serif',
+		fillStyle: 'white',
+		strokeWidth: 1,
+		x: xCoord,
+		y: yCoord,
+		fontSize: 36,
+		layer: true,
+		rotate: rotationVal,
+		text: number
+	});
+}
 $(document).ready(function () {
 	"use strict";
 	$("#resetButton").mouseover(function () {
@@ -288,12 +322,22 @@ $(document).ready(function () {
 	$("#resetButton").click(function () {
 		resetScore();
 	});
+
 });
+
 createDartboardBorder();
 createSegments();
+$(window).load(function(){
+while (f < numberArray.length)
+{
+	drawNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
+f++;
+}
 
-createBullseye();
-//drawNumbers();
+
+createBullseye();});
+
+
 
 
 
