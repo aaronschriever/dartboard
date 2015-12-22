@@ -12,8 +12,13 @@ var i = 0;
 var f = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
-var fadeSpeed = 300;
+var fadeSpeed = 150;
 var sectionWidth = 40;
+var sectionName = "";
+var doubleName = "";
+var trebleName = "";
+var resized = false;
+
 var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
 				   {"number" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
 				   {"number" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
@@ -34,6 +39,8 @@ var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotation
 				   {"number" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37" },
 				   {"number" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18" },
 				   {"number" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
+
+	
 //TODO 
 /*
 Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
@@ -84,19 +91,13 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 		radius: trebleSize,
 		start: startDegs,
 		end: endDegs,
-		mouseover: function (layer) {
+		click: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
 			}, fadeSpeed);
-			
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, fadeSpeed);
-		//	$("#selectionID").empty();
-		},
-		click: function (layer) {
 	
 			addScore(section_score[id] * 3);
 		}
@@ -120,20 +121,14 @@ function makeDouble(id, double_ID, doubleSize, strokeColor) {
 		radius: doubleSize,
 		start: startDegs,
 		end: endDegs,
-		mouseover: function (layer) {
+		click: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: '#ccc'
 			}, fadeSpeed);
-			
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, fadeSpeed);
 			
-		},
-		click: function (layer) {
-		
 			addScore(section_score[id] * 2);
 		}
 	});
@@ -156,21 +151,13 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 		radius: sectionSize,
 		start: startDegs,
 		end: endDegs,
-		
-		mouseover: function (layer) {
+		click: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
 			}, fadeSpeed);
-		//	drawNumbers();
-		
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: fillColor
 			}, fadeSpeed);
-			
-		},
-		click: function (layer) {
 		
 			addScore(section_score[id]);
 		}
@@ -199,7 +186,7 @@ function createSegments() {
 		startDegs = startDegs + 18;
 		endDegs = endDegs + 18;
 	}
-	
+	i = 0;
 }
 /*
 * Create the bull!
@@ -217,19 +204,14 @@ function createDartboardBorder() {
 		shadowBlur: 10,
 		closed: true,
 		layer: true,
-		mouseover: function (layer) {
+		click: function (layer) {
+			
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
 			}, fadeSpeed);
-			
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'black'
 			}, fadeSpeed);
-			
-		},
-		click: function (layer) {
 			addScore(0);
 		}
 	});
@@ -250,19 +232,14 @@ function createBullseye() {
 		radius: 50,
 		start: 1,
 		end: 360,
-		mouseover: function (layer) {
+	
+		click: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
 			}, fadeSpeed);
-			
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'green'
 			}, fadeSpeed);
-			
-		},
-		click: function (layer) {
 			addScore(25);
 		}
 	});
@@ -279,24 +256,19 @@ function createBullseye() {
 		radius: 20,
 		start: 1,
 		end: 360,
-		mouseover: function (layer) {
+		click: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: '#ccc'
 			}, fadeSpeed);
-			
-		},
-		mouseout: function (layer) {
 			$(this).animateLayer(layer, {
 				fillStyle: 'red'
 			}, fadeSpeed);
-			
-		},
-		click: function (layer) {
 			addScore(50);
 		}
 	});
 
 }
+//Draw numbers around dartboard from JSON array.
 function drawNumbers(number, xCoord, yCoord, rotationVal) {
 	"use strict";
 	$('canvas').drawText({
@@ -308,8 +280,42 @@ function drawNumbers(number, xCoord, yCoord, rotationVal) {
 		fontSize: 36,
 		layer: true,
 		rotate: rotationVal,
-		text: number
+		text: number,
+		name: number
 	});
+}
+function writeNumbers() {
+	"use strict";
+	while (f < numberArray.length) {
+		drawNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
+		f += 1;
+	}
+	f = 0;
+}
+function redraw() {
+	"use strict";
+	$('canvas').removeLayer('bullseye25');
+	$('canvas').removeLayer('bullseye50');
+	while (i < 20) {
+		sectionName = "section" + i;
+		doubleName = "double" + i;
+		trebleName = "treble" + i;
+		$('canvas').removeLayer(i);
+		$('canvas').removeLayer(sectionName);
+		$('canvas').removeLayer(doubleName);
+		$('canvas').removeLayer(trebleName);
+		i += 1;
+	}
+	i = 0;
+	createDartboardBorder();
+	// Stop drawing numbers on first resize. 
+	if (resized !== false) {
+		writeNumbers();
+	}
+	createSegments();
+	createBullseye();
+	$('canvas').drawLayers();
+	resized = true;
 }
 $(document).ready(function () {
 	"use strict";
@@ -324,18 +330,25 @@ $(document).ready(function () {
 	});
 
 });
-
-createDartboardBorder();
-createSegments();
-$(window).load(function(){
-while (f < numberArray.length)
-{
-	drawNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
-f++;
+function resizeCanvas() {
+	"use strict";
+	canvas.width = window.innerWidth;
+	canvas.height = window.innerHeight;
+	redraw();
 }
+function initialize() {
+	"use strict";
+	window.addEventListener('resize', resizeCanvas, false);
+}
+initialize();
+
+$(window).load(function () {
+	"use strict";
+	writeNumbers();
+});
+resizeCanvas();
 
 
-createBullseye();});
 
 
 

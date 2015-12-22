@@ -3,26 +3,18 @@ body
 	background-color: darkred;
 	font-family: 'Oswald', sans-serif;
 }
-#inner_ring
-{position: relative;
-    height: 80%;
-    width: 80%;
-    border-radius: 50%;
-    top: 10%;
-    left:10%;
-    background-color: #ffffcc;
-    
-    
-}
-	
-
-
 #dartboard
 {
-    height: 600px;
-    width: 600px;
-    position: absolute;
-            top:0px;
+      position: absolute;
+    top:0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin:0px;
+	/*height: 50%;
+	width: 50%;*/
+	overflow: hidden;
+	display: block;
 }
 #scoreContainer
 {	
@@ -67,7 +59,3 @@ body
 	text-align: center;
 }
 
-.red
-{
-	background-color: darkred;
-}
