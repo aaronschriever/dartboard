@@ -21,6 +21,9 @@ var resized = false;
 var bull25radius = 50;
 var bull50Radius = 20;
 var fontNumSize = 36;
+var resizeDivider= 0;
+var oldDimension = 600;
+var smallestDimension = 600;
 var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
 				   {"number" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
 				   {"number" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
@@ -335,26 +338,38 @@ $(document).ready(function () {
 
 });
 function resizeCanvas() {
+    
 	"use strict";
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-    if (window.innerHeight < 600 && cx !== 150) {
-        cx = cx / 2;
-        cy = cy / 2;
-        blackEdge = blackEdge / 2;
-        sectionSize = sectionSize / 2;
-        trebleSize = trebleSize / 2;
-        doubleSize = doubleSize / 2;
-        sectionWidth = sectionWidth / 2;
-        bull25radius = bull25radius / 2;
-        bull50Radius = bull50Radius / 2;
-        fontNumSize = fontNumSize / 2;
-        while( i < 20) {
-            numberArray[i].xCoord = numberArray[i].xCoord / 2;
-            numberArray[i].yCoord = numberArray[i].yCoord / 2;
-            i+=1;
+    if (canvas.height > canvas.width) {
+        smallestDimension = canvas.width
+    }
+    else {
+        smallestDimension = canvas.height
+    }
+    if (window.innerHeight || window.innerWidth < oldDimension) {
+        
+        resizeDivider =  smallestDimension / oldDimension;
+        //resizeDivider = 1;
+        console.log(resizeDivider);
+        cx = cx * resizeDivider;
+        cy = cy * resizeDivider;
+        blackEdge = blackEdge * resizeDivider;
+        sectionSize = sectionSize * resizeDivider;
+        trebleSize = trebleSize * resizeDivider;
+        doubleSize = doubleSize * resizeDivider;
+        sectionWidth = sectionWidth * resizeDivider;
+        bull25radius = bull25radius * resizeDivider;
+        bull50Radius = bull50Radius * resizeDivider;
+        fontNumSize = fontNumSize * resizeDivider;
+        while (i < 20) {
+            numberArray[i].xCoord = numberArray[i].xCoord * resizeDivider;
+            numberArray[i].yCoord = numberArray[i].yCoord * resizeDivider;
+            i += 1;
         }
-        i=0;
+        i = 0;
+        oldDimension = smallestDimension;
     }
 	redraw();
 }
