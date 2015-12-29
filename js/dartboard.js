@@ -18,7 +18,9 @@ var sectionName = "";
 var doubleName = "";
 var trebleName = "";
 var resized = false;
-
+var bull25radius = 50;
+var bull50Radius = 20;
+var fontNumSize = 36;
 var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
 				   {"number" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
 				   {"number" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
@@ -194,9 +196,10 @@ function createSegments() {
 function createDartboardBorder() {
 	"use strict";
 	$('canvas').drawArc({
+        name: 'dbBorder',
 		x: cx,
 		y: cy,
-		radius: 290,
+		radius: blackEdge,
 		start: 1,
 		end: 360,
 		fillStyle: 'black',
@@ -229,7 +232,7 @@ function createBullseye() {
 		y: cy,
 		strokeWidth: 2,
 		fillStyle: 'green',
-		radius: 50,
+		radius: bull25radius,
 		start: 1,
 		end: 360,
 	
@@ -253,7 +256,7 @@ function createBullseye() {
 		y: cy,
 		strokeWidth: 1,
 		fillStyle: 'red',
-		radius: 20,
+		radius: bull50Radius,
 		start: 1,
 		end: 360,
 		click: function (layer) {
@@ -277,7 +280,7 @@ function drawNumbers(number, xCoord, yCoord, rotationVal) {
 		strokeWidth: 1,
 		x: xCoord,
 		y: yCoord,
-		fontSize: 36,
+		fontSize: fontNumSize,
 		layer: true,
 		rotate: rotationVal,
 		text: number,
@@ -296,6 +299,7 @@ function redraw() {
 	"use strict";
 	$('canvas').removeLayer('bullseye25');
 	$('canvas').removeLayer('bullseye50');
+    $('canvas').removeLayer('dbBorder');
 	while (i < 20) {
 		sectionName = "section" + i;
 		doubleName = "double" + i;
@@ -334,6 +338,24 @@ function resizeCanvas() {
 	"use strict";
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
+    if (window.innerHeight < 600 && cx !== 150) {
+        cx = cx / 2;
+        cy = cy / 2;
+        blackEdge = blackEdge / 2;
+        sectionSize = sectionSize / 2;
+        trebleSize = trebleSize / 2;
+        doubleSize = doubleSize / 2;
+        sectionWidth = sectionWidth / 2;
+        bull25radius = bull25radius / 2;
+        bull50Radius = bull50Radius / 2;
+        fontNumSize = fontNumSize / 2;
+        while( i < 20) {
+            numberArray[i].xCoord = numberArray[i].xCoord / 2;
+            numberArray[i].yCoord = numberArray[i].yCoord / 2;
+            i+=1;
+        }
+        i=0;
+    }
 	redraw();
 }
 function initialize() {
