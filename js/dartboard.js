@@ -10,6 +10,7 @@ var sectionSize = 240;
 var blackEdge = 300;
 var i = 0;
 var f = 0;
+var z = 0;
 var section_score = [20, 1, 18, 4, 13, 6, 10, 15, 2, 17, 3, 19, 7, 16, 8, 11, 14, 9, 12, 5];
 var currentScore = [];
 var fadeSpeed = 150;
@@ -21,7 +22,7 @@ var resized = false;
 var bull25radius = 50;
 var bull50Radius = 20;
 var fontNumSize = 36;
-var resizeDivider= 0;
+var resizeDivider = 0;
 var oldDimension = 600;
 var smallestDimension = 600;
 var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
@@ -275,7 +276,7 @@ function createBullseye() {
 
 }
 //Draw numbers around dartboard from JSON array.
-function drawNumbers(number, xCoord, yCoord, rotationVal) {
+function makeNumbers(number, xCoord, yCoord, rotationVal) {
 	"use strict";
 	$('canvas').drawText({
 		fontFamily: 'Oswald, sans-serif',
@@ -292,15 +293,17 @@ function drawNumbers(number, xCoord, yCoord, rotationVal) {
 }
 function writeNumbers() {
 	"use strict";
-	while (f < numberArray.length) {
-		drawNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
+console.log("writing numbers loop");
+    while (f < numberArray.length) {
+		makeNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
 		f += 1;
 	}
 	f = 0;
 }
 function redraw() {
 	"use strict";
-	$('canvas').removeLayer('bullseye25');
+	context.clearRect(0, 0, canvas.width, canvas.height);
+    $('canvas').removeLayer('bullseye25');
 	$('canvas').removeLayer('bullseye50');
     $('canvas').removeLayer('dbBorder');
 	while (i < 20) {
@@ -314,44 +317,48 @@ function redraw() {
 		i += 1;
 	}
 	i = 0;
+    
 	createDartboardBorder();
 	// Stop drawing numbers on first resize. 
-	if (resized !== false) {
+	if (resized == true) {
+        console.log("in number if statement");
 		writeNumbers();
-	}
+
+    }
 	createSegments();
 	createBullseye();
-	$('canvas').drawLayers();
-	resized = true;
+    //resized = true;
+	
+        //context.clearRect(0, 0, canvas.width, canvas.height);
 }
 $(document).ready(function () {
 	"use strict";
-	$("#resetButton").mouseover(function () {
-		$(this).css("background-color", "#ccc");
-	});
-	$("#resetButton").mouseleave(function () {
-		$(this).css("background-color", "black");
-	});
 	$("#resetButton").click(function () {
-		resetScore();
+        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
+        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
+
+    	resetScore();
 	});
 
 });
 function resizeCanvas() {
-    
+    //resize the dartboard on the canvas to match the viewport size.    
 	"use strict";
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-    if (canvas.height > canvas.width) {
-        smallestDimension = canvas.width
+    if (window.innerHeight > window.innerWidth) {
+        smallestDimension = window.innerWidth;
+    } else {
+        smallestDimension = window.innerHeight;
     }
-    else {
-        smallestDimension = canvas.height
-    }
-    if (window.innerHeight || window.innerWidth < oldDimension) {
+ 
+    //if (window.innerHeight || window.innerWidth < oldDimension) {
         
         resizeDivider =  smallestDimension / oldDimension;
-        //resizeDivider = 1;
+        $('canvas').setLayer('zoom', {
+        scale: resizeDivider
+    }).drawLayers();
+        /*
         console.log(resizeDivider);
         cx = cx * resizeDivider;
         cy = cy * resizeDivider;
@@ -369,8 +376,11 @@ function resizeCanvas() {
             i += 1;
         }
         i = 0;
+        $("canvas").restoreCanvas({
+            layer: true
+        });*/
         oldDimension = smallestDimension;
-    }
+    //}
 	redraw();
 }
 function initialize() {
@@ -378,11 +388,20 @@ function initialize() {
 	window.addEventListener('resize', resizeCanvas, false);
 }
 initialize();
-
-$(window).load(function () {
-	"use strict";
-	writeNumbers();
+$('canvas').scaleCanvas({
+    layer: true,
+    name: "zoom", // give layer a name so we can easily retrieve it later
+    x: 0, y: 0,
+    scale: 1 // set its scale factor to 1 
 });
+    $(window).load(function () {
+	   "use strict";
+        if (resized == false) {
+	       writeNumbers();
+            resized = true;
+        }
+    }); 
+
 resizeCanvas();
 
 
