@@ -22,7 +22,7 @@ var resized = false;
 var bull25radius = 50;
 var bull50Radius = 20;
 var fontNumSize = 36;
-var resizeDivider = 0;
+var resizeDivider = 5;
 var oldDimension = 600;
 var smallestDimension = 600;
 var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
@@ -47,10 +47,6 @@ var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotation
 				   {"number" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
 
 	
-//TODO 
-/*
-Add array of sections with ID's. May be best to break up either arrays for trebles, doubles etc or array into a section with a double and a triple area.
-*/
 
 function toRadians(deg) {
     "use strict";
@@ -211,6 +207,7 @@ function createDartboardBorder() {
 		shadowBlur: 10,
 		closed: true,
 		layer: true,
+		groups: ['border'],
 		click: function (layer) {
 			
 			$(this).animateLayer(layer, {
@@ -293,7 +290,7 @@ function makeNumbers(number, xCoord, yCoord, rotationVal) {
 }
 function writeNumbers() {
 	"use strict";
-console.log("writing numbers loop");
+//console.log("writing numbers loop");
     while (f < numberArray.length) {
 		makeNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
 		f += 1;
@@ -302,45 +299,15 @@ console.log("writing numbers loop");
 }
 function redraw() {
 	"use strict";
-	context.clearRect(0, 0, canvas.width, canvas.height);
-    $('canvas').removeLayer('bullseye25');
-	$('canvas').removeLayer('bullseye50');
-    $('canvas').removeLayer('dbBorder');
-	while (i < 20) {
-		sectionName = "section" + i;
-		doubleName = "double" + i;
-		trebleName = "treble" + i;
-		$('canvas').removeLayer(i);
-		$('canvas').removeLayer(sectionName);
-		$('canvas').removeLayer(doubleName);
-		$('canvas').removeLayer(trebleName);
-		i += 1;
-	}
-	i = 0;
-    
 	createDartboardBorder();
 	// Stop drawing numbers on first resize. 
-	if (resized == true) {
-        console.log("in number if statement");
+	if (resized === true) {
 		writeNumbers();
-
     }
 	createSegments();
 	createBullseye();
-    //resized = true;
-	
-        //context.clearRect(0, 0, canvas.width, canvas.height);
+   
 }
-$(document).ready(function () {
-	"use strict";
-	$("#resetButton").click(function () {
-        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
-        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
-
-    	resetScore();
-	});
-
-});
 function resizeCanvas() {
     //resize the dartboard on the canvas to match the viewport size.    
 	"use strict";
@@ -351,58 +318,52 @@ function resizeCanvas() {
     } else {
         smallestDimension = window.innerHeight;
     }
- 
-    //if (window.innerHeight || window.innerWidth < oldDimension) {
-        
-        resizeDivider =  smallestDimension / oldDimension;
-        $('canvas').setLayer('zoom', {
-        scale: resizeDivider
-    }).drawLayers();
-        /*
-        console.log(resizeDivider);
-        cx = cx * resizeDivider;
-        cy = cy * resizeDivider;
-        blackEdge = blackEdge * resizeDivider;
-        sectionSize = sectionSize * resizeDivider;
-        trebleSize = trebleSize * resizeDivider;
-        doubleSize = doubleSize * resizeDivider;
-        sectionWidth = sectionWidth * resizeDivider;
-        bull25radius = bull25radius * resizeDivider;
-        bull50Radius = bull50Radius * resizeDivider;
-        fontNumSize = fontNumSize * resizeDivider;
-        while (i < 20) {
-            numberArray[i].xCoord = numberArray[i].xCoord * resizeDivider;
-            numberArray[i].yCoord = numberArray[i].yCoord * resizeDivider;
-            i += 1;
-        }
-        i = 0;
-        $("canvas").restoreCanvas({
-            layer: true
-        });*/
-        oldDimension = smallestDimension;
-    //}
-	redraw();
+	resizeDivider =  smallestDimension / oldDimension;
+    $('canvas').setLayer('zoom', {
+		scale: resizeDivider
+	}).restoreCanvas({layer: true}).drawLayers();
 }
+$(document).ready(function () {
+	"use strict";
+	$("#resetButton").click(function () {
+        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
+        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
+		resetScore();
+	});
+	$("#resizeButton").click(function () {
+        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
+        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
+		resizeCanvas();
+	});
+});
+
 function initialize() {
 	"use strict";
 	window.addEventListener('resize', resizeCanvas, false);
 }
+
 initialize();
 $('canvas').scaleCanvas({
     layer: true,
     name: "zoom", // give layer a name so we can easily retrieve it later
-    x: 0, y: 0,
+    x: 0,
+	y: 0,
     scale: 1 // set its scale factor to 1 
+}).mouseout(function () {
+	"use strict";
+	$('#canvasSize').empty();
+	$('#canvasSize').append("<p>" + canvas.width + "</p>");
 });
-    $(window).load(function () {
-	   "use strict";
-        if (resized == false) {
-	       writeNumbers();
-            resized = true;
-        }
-    }); 
 
-resizeCanvas();
+$(window).load(function () {
+	"use strict";
+	if (resized === false) {
+		writeNumbers();
+		resized = true;
+	}
+	redraw();
+});
+
 
 
 

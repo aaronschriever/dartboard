@@ -30,7 +30,7 @@ body
 	border-style: groove;
 	color:azure;
 	top: 0em;
-	right: 0.5em;
+	right: 1em;
 }
 #score
 { 	min-height: 6em;
@@ -47,7 +47,7 @@ body
 	height: 4em;
 	right: 1em;
 }
-#resetButton
+#resetButton, #resizeButton, #canvasSize
 {	background-color: black;
 	color:azure;
 	font-size: 2.0em;
