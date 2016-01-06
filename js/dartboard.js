@@ -23,28 +23,28 @@ var bull25radius = 50;
 var bull50Radius = 20;
 var fontNumSize = 36;
 var resizeDivider = 5;
-var oldDimension = 600;
-var smallestDimension = 600;
-var numberArray = [{"number" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
-				   {"number" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
-				   {"number" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
-				   {"number" : "4", "xCoord" : "515", "yCoord" : "140", "rotationVal" : "55" },
-				   {"number" : "5", "xCoord" : "215", "yCoord" : "50", "rotationVal" : "-20" },
-				   {"number" : "6", "xCoord" : "565", "yCoord" : "300", "rotationVal" : "90" },
-				   {"number" : "7", "xCoord" : "145", "yCoord" : "515", "rotationVal" : "35" },
-				   {"number" : "8", "xCoord" : "45", "yCoord" : "380", "rotationVal" : "75" },
-				   {"number" : "9", "xCoord" : "80", "yCoord" : "150", "rotationVal" : "-52" },
-				   {"number" : "10", "xCoord" : "550", "yCoord" : "385", "rotationVal" : "-70" },
-				   {"number" : "11", "xCoord" : "35", "yCoord" : "300", "rotationVal" : "-90" },
-				   {"number" : "12", "xCoord" : "140", "yCoord" : "90", "rotationVal" : "-35" },
-				   {"number" : "13", "xCoord" : "550", "yCoord" : "215", "rotationVal" : "69" },
-				   {"number" : "14", "xCoord" : "45", "yCoord" : "215",  "rotationVal" : "-70" },
-				   {"number" : "15", "xCoord" : "510", "yCoord" : "460", "rotationVal" : "-55" },
-				   {"number" : "16", "xCoord" : "85", "yCoord" : "450", "rotationVal" : "55" },
-				   {"number" : "17", "xCoord" : "380", "yCoord" : "555", "rotationVal" : "-18" },
-				   {"number" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37" },
-				   {"number" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18" },
-				   {"number" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
+var oldDimension = 800;
+var smallestDimension = 800;
+var numberArray = [{"text" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
+				   {"text" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
+				   {"text" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
+				   {"text" : "4", "xCoord" : "515", "yCoord" : "140", "rotationVal" : "55" },
+				   {"text" : "5", "xCoord" : "215", "yCoord" : "50", "rotationVal" : "-20" },
+				   {"text" : "6", "xCoord" : "565", "yCoord" : "300", "rotationVal" : "90" },
+				   {"text" : "7", "xCoord" : "145", "yCoord" : "515", "rotationVal" : "35" },
+				   {"text" : "8", "xCoord" : "45", "yCoord" : "380", "rotationVal" : "75" },
+				   {"text" : "9", "xCoord" : "80", "yCoord" : "150", "rotationVal" : "-52" },
+				   {"text" : "10", "xCoord" : "550", "yCoord" : "385", "rotationVal" : "-70" },
+				   {"text" : "11", "xCoord" : "35", "yCoord" : "300", "rotationVal" : "-90" },
+				   {"text" : "12", "xCoord" : "140", "yCoord" : "90", "rotationVal" : "-35" },
+				   {"text" : "13", "xCoord" : "550", "yCoord" : "215", "rotationVal" : "69" },
+				   {"text" : "14", "xCoord" : "45", "yCoord" : "215",  "rotationVal" : "-70" },
+				   {"text" : "15", "xCoord" : "510", "yCoord" : "460", "rotationVal" : "-55" },
+				   {"text" : "16", "xCoord" : "85", "yCoord" : "450", "rotationVal" : "55" },
+				   {"text" : "17", "xCoord" : "380", "yCoord" : "555", "rotationVal" : "-18" },
+				   {"text" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37" },
+				   {"text" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18" },
+				   {"text" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
 
 	
 
@@ -56,10 +56,16 @@ function toRadians(deg) {
 function resetScore() {
 	"use strict";
 	currentScore = [];
-	$("#dart1").empty();
-	$("#dart2").empty();
-	$("#dart3").empty();
-	$("#total").empty();
+	$('canvas').setLayer('dart1', {
+		text: ''
+}).setLayer('dart2', {
+		text: ''
+}).setLayer('dart3', {
+		text: ''
+}).setLayer('Total', {
+		text: ''
+}).drawLayers();
+	
 }
 /*
 *Make the treble section of the dartboard and add interactivity. 
@@ -69,13 +75,29 @@ function addScore(score) {
 	if (currentScore.length < 3) {
 		currentScore.push(score);
 	}
-	$("#dart1").empty();
-	$("#dart2").empty();
-	$("#dart3").empty();
-	$("#total").empty();
-	$("#dart1").append(currentScore[0]);
-	$("#dart2").append(currentScore[1]);
-	$("#dart3").append(currentScore[2]);
+	if (currentScore[0] != null || '' || undefined){
+	$('canvas').setLayer('dart1', {
+		fillStyle: '#fff',
+		text: currentScore[0]
+	}).drawLayers();
+	}
+	if (currentScore[1] != null || '' || undefined){
+	$('canvas').setLayer('dart2', {
+		fillStyle: '#fff',
+		text: currentScore[1]
+	}).drawLayers();
+	}
+	if (currentScore[2] != null || '' || undefined){
+	$('canvas').setLayer('dart3', {
+		fillStyle: '#fff',
+		text: currentScore[2]
+	}).setLayer('Total', {
+		fillStyle: '#fff',
+		text: currentScore[0] + currentScore[1] + currentScore[2]
+	})
+		.drawLayers();
+		
+	}
 	$("#total").append(currentScore[0] + currentScore[1] + currentScore[2]);
 	
 }
@@ -100,7 +122,6 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, fadeSpeed);
-	
 			addScore(section_score[id] * 3);
 		}
 	});
@@ -273,7 +294,7 @@ function createBullseye() {
 
 }
 //Draw numbers around dartboard from JSON array.
-function makeNumbers(number, xCoord, yCoord, rotationVal) {
+function makeText(text, xCoord, yCoord, rotationVal) {
 	"use strict";
 	$('canvas').drawText({
 		fontFamily: 'Oswald, sans-serif',
@@ -284,29 +305,63 @@ function makeNumbers(number, xCoord, yCoord, rotationVal) {
 		fontSize: fontNumSize,
 		layer: true,
 		rotate: rotationVal,
-		text: number,
-		name: number
+		text: text,
+		name: text,
+		groups: [text]
 	});
 }
 function writeNumbers() {
 	"use strict";
 //console.log("writing numbers loop");
     while (f < numberArray.length) {
-		makeNumbers(numberArray[f].number, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
+		makeText(numberArray[f].text, numberArray[f].xCoord, numberArray[f].yCoord, numberArray[f].rotationVal);
 		f += 1;
 	}
 	f = 0;
 }
-function redraw() {
+function draw() {
+	
 	"use strict";
 	createDartboardBorder();
 	// Stop drawing numbers on first resize. 
-	if (resized === true) {
+	//if (resized === true) {
 		writeNumbers();
-    }
+   // }
 	createSegments();
-	createBullseye();
-   
+	createBullseye();   
+	resizeCanvas();
+	$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 100, y: 540,
+		width: 100,
+		height: 50,
+		cornerRadius: 10,
+		layer: true,
+		groups: ['reset'],
+		click: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+			resetScore();
+		}
+});
+	
+	makeText('reset', canvas.width - 100, 540, 0);
+	$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 100, y: 340,
+		width: 100,
+		height: 200,
+		cornerRadius: 10,
+		layer: true,
+		groups: ['score']});
+	makeText('dart1', canvas.width - 100, 280, 0);
+	makeText('dart2', canvas.width - 100, 320, 0);
+	makeText('dart3', canvas.width - 100, 360, 0);
+	makeText('Total', canvas.width - 100, 400, 0);
 }
 function resizeCanvas() {
     //resize the dartboard on the canvas to match the viewport size.    
@@ -322,19 +377,20 @@ function resizeCanvas() {
     $('canvas').setLayer('zoom', {
 		scale: resizeDivider
 	}).restoreCanvas({layer: true}).drawLayers();
+	if (canvas.height > canvas.width && (canvas.height > 400))
+	{
+		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y: canvas.height - 50}).drawLayers();
+		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y: canvas.height - 180}).drawLayers();
+	}
+	else
+	{
+		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y:  250}).drawLayers();
+		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y:  120}).drawLayers();
+	}
 }
 $(document).ready(function () {
 	"use strict";
-	$("#resetButton").click(function () {
-        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
-        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
-		resetScore();
-	});
-	$("#resizeButton").click(function () {
-        $(this).animate({ backgroundColor: "#ccc" }, fadeSpeed);
-        $(this).animate({ backgroundColor: "black" }, fadeSpeed);
-		resizeCanvas();
-	});
+draw();
 });
 
 function initialize() {
@@ -342,28 +398,21 @@ function initialize() {
 	window.addEventListener('resize', resizeCanvas, false);
 }
 
-initialize();
+
 $('canvas').scaleCanvas({
     layer: true,
     name: "zoom", // give layer a name so we can easily retrieve it later
     x: 0,
 	y: 0,
     scale: 1 // set its scale factor to 1 
-}).mouseout(function () {
-	"use strict";
-	$('#canvasSize').empty();
-	$('#canvasSize').append("<p>" + canvas.width + "</p>");
 });
 
 $(window).load(function () {
 	"use strict";
-	if (resized === false) {
-		writeNumbers();
-		resized = true;
-	}
-	redraw();
 });
+initialize();
 
+console.log("end of the line");
 
 
 
