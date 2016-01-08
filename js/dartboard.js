@@ -23,28 +23,28 @@ var bull25radius = 50;
 var bull50Radius = 20;
 var fontNumSize = 36;
 var resizeDivider = 5;
-var oldDimension = 800;
-var smallestDimension = 800;
-var numberArray = [{"text" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17" },
-				   {"text" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35" },
-				   {"text" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0" },
-				   {"text" : "4", "xCoord" : "515", "yCoord" : "140", "rotationVal" : "55" },
-				   {"text" : "5", "xCoord" : "215", "yCoord" : "50", "rotationVal" : "-20" },
-				   {"text" : "6", "xCoord" : "565", "yCoord" : "300", "rotationVal" : "90" },
-				   {"text" : "7", "xCoord" : "145", "yCoord" : "515", "rotationVal" : "35" },
-				   {"text" : "8", "xCoord" : "45", "yCoord" : "380", "rotationVal" : "75" },
-				   {"text" : "9", "xCoord" : "80", "yCoord" : "150", "rotationVal" : "-52" },
-				   {"text" : "10", "xCoord" : "550", "yCoord" : "385", "rotationVal" : "-70" },
-				   {"text" : "11", "xCoord" : "35", "yCoord" : "300", "rotationVal" : "-90" },
-				   {"text" : "12", "xCoord" : "140", "yCoord" : "90", "rotationVal" : "-35" },
-				   {"text" : "13", "xCoord" : "550", "yCoord" : "215", "rotationVal" : "69" },
-				   {"text" : "14", "xCoord" : "45", "yCoord" : "215",  "rotationVal" : "-70" },
-				   {"text" : "15", "xCoord" : "510", "yCoord" : "460", "rotationVal" : "-55" },
-				   {"text" : "16", "xCoord" : "85", "yCoord" : "450", "rotationVal" : "55" },
-				   {"text" : "17", "xCoord" : "380", "yCoord" : "555", "rotationVal" : "-18" },
-				   {"text" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37" },
-				   {"text" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18" },
-				   {"text" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0" }];
+var oldDimension = 600;
+var smallestDimension = 600;
+var numberArray = [{"text" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17", "group" : 'numbers' },
+				   {"text" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35", "group" : 'numbers' },
+				   {"text" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0", "group" : 'numbers' },
+				   {"text" : "4", "xCoord" : "515", "yCoord" : "140", "rotationVal" : "55", "group" : 'numbers' },
+				   {"text" : "5", "xCoord" : "215", "yCoord" : "50", "rotationVal" : "-20", "group" : 'numbers' },
+				   {"text" : "6", "xCoord" : "565", "yCoord" : "300", "rotationVal" : "90", "group" : 'numbers' },
+				   {"text" : "7", "xCoord" : "145", "yCoord" : "515", "rotationVal" : "35", "group" : 'numbers' },
+				   {"text" : "8", "xCoord" : "45", "yCoord" : "380", "rotationVal" : "75", "group" : 'numbers' },
+				   {"text" : "9", "xCoord" : "80", "yCoord" : "150", "rotationVal" : "-52", "group" : 'numbers' },
+				   {"text" : "10", "xCoord" : "550", "yCoord" : "385", "rotationVal" : "-70", "group" : 'numbers' },
+				   {"text" : "11", "xCoord" : "35", "yCoord" : "300", "rotationVal" : "-90", "group" : 'numbers' },
+				   {"text" : "12", "xCoord" : "140", "yCoord" : "90", "rotationVal" : "-35", "group" : 'numbers' },
+				   {"text" : "13", "xCoord" : "550", "yCoord" : "215", "rotationVal" : "69", "group" : 'numbers' },
+				   {"text" : "14", "xCoord" : "45", "yCoord" : "215",  "rotationVal" : "-70", "group" : 'numbers' },
+				   {"text" : "15", "xCoord" : "510", "yCoord" : "460", "rotationVal" : "-55", "group" : 'numbers' },
+				   {"text" : "16", "xCoord" : "85", "yCoord" : "450", "rotationVal" : "55", "group" : 'numbers' },
+				   {"text" : "17", "xCoord" : "380", "yCoord" : "555", "rotationVal" : "-18", "group" : 'numbers' },
+				   {"text" : "18", "xCoord" : "455", "yCoord" : "85", "rotationVal" : "37", "group" : 'numbers' },
+				   {"text" : "19", "xCoord" : "215", "yCoord" : "550", "rotationVal" : "18", "group" : 'numbers' },
+				   {"text" : "20", "xCoord" : "300", "yCoord" : "35", "rotationVal" : "0", "group" : 'numbers' }];
 
 	
 
@@ -294,7 +294,7 @@ function createBullseye() {
 
 }
 //Draw numbers around dartboard from JSON array.
-function makeText(text, xCoord, yCoord, rotationVal) {
+function makeText(text, xCoord, yCoord, rotationVal, group) {
 	"use strict";
 	$('canvas').drawText({
 		fontFamily: 'Oswald, sans-serif',
@@ -307,7 +307,7 @@ function makeText(text, xCoord, yCoord, rotationVal) {
 		rotate: rotationVal,
 		text: text,
 		name: text,
-		groups: [text]
+		groups: [group]
 	});
 }
 function writeNumbers() {
@@ -332,7 +332,7 @@ function draw() {
 	resizeCanvas();
 	$('canvas').drawRect({
 		fillStyle: 'black',
-		x: canvas.width - 100, y: 540,
+		x: canvas.width - 100, y: 250,
 		width: 100,
 		height: 50,
 		cornerRadius: 10,
@@ -349,19 +349,20 @@ function draw() {
 		}
 });
 	
-	makeText('reset', canvas.width - 100, 540, 0);
+	makeText('reset', canvas.width - 100, 250, 0, 'reset');
 	$('canvas').drawRect({
 		fillStyle: 'black',
-		x: canvas.width - 100, y: 340,
+		x: canvas.width - 100,
+		y: 120,
 		width: 100,
 		height: 200,
 		cornerRadius: 10,
 		layer: true,
 		groups: ['score']});
-	makeText('dart1', canvas.width - 100, 280, 0);
-	makeText('dart2', canvas.width - 100, 320, 0);
-	makeText('dart3', canvas.width - 100, 360, 0);
-	makeText('Total', canvas.width - 100, 400, 0);
+	makeText('dart1', canvas.width - 100, 60, 0, 'score');
+	makeText('dart2', canvas.width - 100, 100, 0, 'score');
+	makeText('dart3', canvas.width - 100, 140, 0, 'score');
+	makeText('Total', canvas.width - 100, 180, 0, 'score');
 }
 function resizeCanvas() {
     //resize the dartboard on the canvas to match the viewport size.    
@@ -379,15 +380,30 @@ function resizeCanvas() {
 	}).restoreCanvas({layer: true}).drawLayers();
 	if (canvas.height > canvas.width && (canvas.height > 400))
 	{
-		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y: canvas.height - 50}).drawLayers();
-		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y: canvas.height - 180}).drawLayers();
+		$('canvas').setLayerGroup('reset',{x: 100, y: canvas.height - 50}).setLayerGroup('score',{x: 100, y: canvas.height - 180});
+		$('canvas').setLayer('dart1',{x:  100, y: canvas.height - 240});
+		$('canvas').setLayer('dart2',{x:  100, y: canvas.height - 200});
+		$('canvas').setLayer('dart3',{x:  100, y: canvas.height - 160});
+		$('canvas').setLayer('Total',{x:  100, y: canvas.height - 120}).drawLayers();
 	}
 	else
-	{
-		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y:  250}).drawLayers();
-		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y:  120}).drawLayers();
+	{	
+	
+		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y:  250});
+		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y:  120});
+		$('canvas').setLayer('dart1',{x:  canvas.width - 100, y:  60});
+		$('canvas').setLayer('dart2',{x:  canvas.width - 100, y: 100});
+		$('canvas').setLayer('dart3',{x:  canvas.width - 100, y: 140});
+		$('canvas').setLayer('Total',{x:  canvas.width - 100, y:  180}).drawLayers();
 	}
 }
+$('canvas').scaleCanvas({
+    layer: true,
+    name: "zoom", // give layer a name so we can easily retrieve it later
+    x: 0,
+	y: 0,
+    scale: 1 // set its scale factor to 1 
+});
 $(document).ready(function () {
 	"use strict";
 draw();
@@ -399,13 +415,7 @@ function initialize() {
 }
 
 
-$('canvas').scaleCanvas({
-    layer: true,
-    name: "zoom", // give layer a name so we can easily retrieve it later
-    x: 0,
-	y: 0,
-    scale: 1 // set its scale factor to 1 
-});
+
 
 $(window).load(function () {
 	"use strict";
