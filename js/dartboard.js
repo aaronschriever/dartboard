@@ -25,6 +25,8 @@ var fontNumSize = 36;
 var resizeDivider = 5;
 var oldDimension = 600;
 var smallestDimension = 600;
+var gameScore = 301;
+var dartTotal = 0;
 var numberArray = [{"text" : "1", "xCoord" : "385", "yCoord" : "45", "rotationVal" : "17", "group" : 'numbers' },
 				   {"text" : "2", "xCoord" : "450", "yCoord" : "520", "rotationVal" : "-35", "group" : 'numbers' },
 				   {"text" : "3", "xCoord" : "300", "yCoord" : "565", "rotationVal" : "0", "group" : 'numbers' },
@@ -67,38 +69,62 @@ function resetScore() {
 }).drawLayers();
 	
 }
+function calculateGameScore() {
+	
+	if (currentScore[2]!= null || '' || undefined){
+		dartTotal = currentScore[0].score + currentScore[1].score + currentScore[2].score;
+		dartTotal = currentScore[0].score + currentScore[1].score + currentScore[2].score;
+		if (gameScore < dartTotal || gameScore - dartTotal ===1) {
+			$('canvas').setLayer('reset', {
+		text: 'Bust!'
+}).drawLayers();
+		}
+		else {
+			gameScore -= dartTotal;
+			if (gameScore === 0 && currentScore[0].isDouble === true) {
+				
+			}
+		}
+	
+	$('canvas').setLayer('game', {
+		fillStyle: '#fff',
+		text: gameScore
+	}).drawLayers();
+	}
+}
 /*
 *Make the treble section of the dartboard and add interactivity. 
 */
-function addScore(score) {
+function addScore(score, isDouble) {
 	"use strict";
 	if (currentScore.length < 3) {
-		currentScore.push(score);
+		currentScore.push({"score": score, "isDouble" : isDouble});
 	}
 	if (currentScore[0] != null || '' || undefined){
 	$('canvas').setLayer('dart1', {
 		fillStyle: '#fff',
-		text: currentScore[0]
-	}).drawLayers();
+		text: currentScore[0].score
+	}).setLayer('reset', {
+		text: 'Reset'
+}).drawLayers();
 	}
 	if (currentScore[1] != null || '' || undefined){
 	$('canvas').setLayer('dart2', {
 		fillStyle: '#fff',
-		text: currentScore[1]
+		text: currentScore[1].score
 	}).drawLayers();
 	}
 	if (currentScore[2] != null || '' || undefined){
 	$('canvas').setLayer('dart3', {
 		fillStyle: '#fff',
-		text: currentScore[2]
+		text: currentScore[2].score
 	}).setLayer('Total', {
 		fillStyle: '#fff',
-		text: currentScore[0] + currentScore[1] + currentScore[2]
+		text: currentScore[0].score + currentScore[1].score + currentScore[2].score
 	})
 		.drawLayers();
 		
 	}
-	$("#total").append(currentScore[0] + currentScore[1] + currentScore[2]);
 	
 }
 function makeTreble(id, treble_ID, trebleSize, strokeColor) {
@@ -122,7 +148,7 @@ function makeTreble(id, treble_ID, trebleSize, strokeColor) {
 			$(this).animateLayer(layer, {
 				strokeStyle: strokeColor
 			}, fadeSpeed);
-			addScore(section_score[id] * 3);
+			addScore(section_score[id] * 3 , false);
 		}
 	});
 	
@@ -152,7 +178,7 @@ function makeDouble(id, double_ID, doubleSize, strokeColor) {
 				strokeStyle: strokeColor
 			}, fadeSpeed);
 			
-			addScore(section_score[id] * 2);
+			addScore(section_score[id] * 2, true);
 		}
 	});
 }
@@ -182,7 +208,7 @@ function makeSection(id, section_ID, sectionSize, fillColor) {
 				fillStyle: fillColor
 			}, fadeSpeed);
 		
-			addScore(section_score[id]);
+			addScore(section_score[id], false);
 		}
 	});
 	
@@ -237,7 +263,7 @@ function createDartboardBorder() {
 			$(this).animateLayer(layer, {
 				fillStyle: 'black'
 			}, fadeSpeed);
-			addScore(0);
+			addScore(0, false);
 		}
 	});
 }
@@ -265,7 +291,7 @@ function createBullseye() {
 			$(this).animateLayer(layer, {
 				fillStyle: 'green'
 			}, fadeSpeed);
-			addScore(25);
+			addScore(25, false);
 		}
 	});
 	$('canvas').drawArc({
@@ -288,7 +314,7 @@ function createBullseye() {
 			$(this).animateLayer(layer, {
 				fillStyle: 'red'
 			}, fadeSpeed);
-			addScore(50);
+			addScore(50, true);
 		}
 	});
 
@@ -348,8 +374,38 @@ function draw() {
 			resetScore();
 		}
 });
+		$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 100, y: 310,
+		width: 100,
+		height: 50,
+		cornerRadius: 10,
+		layer: true,
+		groups: ['add'],
+		click: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+			calculateGameScore();
+			resetScore();
+		}
+});
+	$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 100, y: 370,
+		width: 100,
+		height: 50,
+		cornerRadius: 10,
+		layer: true,
+		groups: ['gameScore']
+});
 	
 	makeText('reset', canvas.width - 100, 250, 0, 'reset');
+	makeText('add', canvas.width - 100, 310, 0, 'add');
+	makeText('game', canvas.width - 100, 370, 0, 'gameScore');
 	$('canvas').drawRect({
 		fillStyle: 'black',
 		x: canvas.width - 100,
@@ -363,6 +419,7 @@ function draw() {
 	makeText('dart2', canvas.width - 100, 100, 0, 'score');
 	makeText('dart3', canvas.width - 100, 140, 0, 'score');
 	makeText('Total', canvas.width - 100, 180, 0, 'score');
+	
 }
 function resizeCanvas() {
     //resize the dartboard on the canvas to match the viewport size.    
@@ -380,16 +437,16 @@ function resizeCanvas() {
 	}).restoreCanvas({layer: true}).drawLayers();
 	if (canvas.height > canvas.width && (canvas.height > 400))
 	{
-		$('canvas').setLayerGroup('reset',{x: 100, y: canvas.height - 50}).setLayerGroup('score',{x: 100, y: canvas.height - 180});
-		$('canvas').setLayer('dart1',{x:  100, y: canvas.height - 240});
-		$('canvas').setLayer('dart2',{x:  100, y: canvas.height - 200});
-		$('canvas').setLayer('dart3',{x:  100, y: canvas.height - 160});
-		$('canvas').setLayer('Total',{x:  100, y: canvas.height - 120}).drawLayers();
+		$('canvas').setLayerGroup('reset',{x: 100, y: canvas.height - 90}).setLayerGroup('score',{x: 100, y: canvas.height - 220}).setLayerGroup('add',{x: 100, y: canvas.height - 30}).setLayerGroup('gameScore',{x: 210, y: canvas.height - 30});
+		$('canvas').setLayer('dart1',{x:  100, y: canvas.height - 280});
+		$('canvas').setLayer('dart2',{x:  100, y: canvas.height - 240});
+		$('canvas').setLayer('dart3',{x:  100, y: canvas.height - 200});
+		$('canvas').setLayer('Total',{x:  100, y: canvas.height - 160}).drawLayers();
 	}
 	else
 	{	
 	
-		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y:  250});
+		$('canvas').setLayerGroup('reset',{x: canvas.width - 100, y:  250}).setLayerGroup('add',{x: canvas.width - 100, y:  310}).setLayerGroup('gameScore',{x: canvas.width - 100, y:  370})
 		$('canvas').setLayerGroup('score',{x: canvas.width - 100, y:  120});
 		$('canvas').setLayer('dart1',{x:  canvas.width - 100, y:  60});
 		$('canvas').setLayer('dart2',{x:  canvas.width - 100, y: 100});
