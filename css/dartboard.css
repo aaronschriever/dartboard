@@ -16,36 +16,3 @@ body
 	overflow: hidden;*/
 	display: block;
 }
-#scoreContainer
-{	
-	position: relative;
-		height: 6em;
-	width: 4em;
-	float: right;
-	text-align: center;
-	background-color: black;
-	font-size: 2em;
-	border-radius: 1em;
-	border-color: black;
-	border-style: groove;
-	color:azure;
-	top: 0em;
-	right: 1em;
-}
-#score
-{ 	min-height: 6em;
-	position: absolute;
-	top: 1em;
-	text-align: center;
-	width: inherit;
-}
-#resetButtonContainer
-{ position: absolute;
-	float: right;
-	top: 12.5em;
-	width: 8em;
-	height: 4em;
-	right: 1em;
-}
-
-
