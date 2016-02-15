@@ -8,7 +8,7 @@ var cx = 300;
 var cy = 300;
 var startDegs = -9;
 var endDegs = 9;
-var trebleSize = 90;
+var trebleSize = 110;
 var doubleSize = 220;
 var sectionSize = 240;
 var blackEdge = 300;
@@ -194,6 +194,8 @@ function calculateGameScore() {
 				i += 1;
 			}
 			i = 0;
+		} else {
+			$('canvas').setLayer('dartOut', {text: ""});
 		}
 	}
 }
