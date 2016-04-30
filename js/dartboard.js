@@ -463,20 +463,33 @@ function writeNumbers() {
 function alignScores() {
 	"use strict";
 	if (canvas.height > canvas.width && (canvas.height > 400)) {
-		$('canvas').setLayerGroup('reset', {x: 210, y: canvas.height - 295}).setLayerGroup('score', {x: 100, y: canvas.height - 220}).setLayerGroup('add', {x: 210, y: canvas.height - 235}).setLayerGroup('gameScore', { x: 210, y: canvas.height - 145}).setLayerGroup('dartOutDisp', { x: 160, y: canvas.height - 90});
+		$('canvas').setLayerGroup('reset', {x: 210, y: canvas.height - 295}).setLayerGroup('score', {x: 100, y: canvas.height - 220}).setLayerGroup('add', {x: 210, y: canvas.height - 235}).setLayerGroup('gameScore', { x: 210, y: canvas.height - 145}).setLayerGroup('dartOutDisp', { x: 155, y: canvas.height - 90}).setLayerGroup('gameChoice501', { x: 210, y: canvas.height - 185}).setLayerGroup('gameChoice301', { x: 210, y: canvas.height - 140});
 		$('canvas').setLayer('dart1', {x:  100, y: canvas.height - 280});
 		$('canvas').setLayer('dart2', {x:  100, y: canvas.height - 240});
 		$('canvas').setLayer('dart3', {x:  100, y: canvas.height - 200});
 		$('canvas').setLayer('Total', {x:  100, y: canvas.height - 160}).drawLayers();
 	} else {
 	
-		$('canvas').setLayerGroup('reset', {x: canvas.width - 100, y:  45}).setLayerGroup('add', {x: canvas.width - 100, y:  100}).setLayerGroup('gameScore', {x: canvas.width - 100, y:  195}).setLayerGroup('dartOutDisp', { x: canvas.width - 150, y: 250});
+		$('canvas').setLayerGroup('reset', {x: canvas.width - 100, y:  45}).setLayerGroup('add', {x: canvas.width - 100, y:  100}).setLayerGroup('gameScore', {x: canvas.width - 100, y:  195}).setLayerGroup('dartOutDisp', { x: canvas.width - 155, y: 250}).setLayerGroup('gameChoice501', { x: canvas.width - 100, y: 150}).setLayerGroup('gameChoice301', { x: canvas.width - 100, y:  195});
 		$('canvas').setLayerGroup('score', {x: canvas.width - 210, y:  120});
 		$('canvas').setLayer('dart1', {x:  canvas.width - 210, y:  60});
 		$('canvas').setLayer('dart2', {x:  canvas.width - 210, y: 100});
 		$('canvas').setLayer('dart3', {x:  canvas.width - 210, y: 140});
+		$('canvas').setLayer('dart3', {x:  canvas.width - 210, y: 140});
 		$('canvas').setLayer('Total', {x:  canvas.width - 210, y:  180}).drawLayers();
 	}
+	
+}
+function changeGameType( _gameScore) {
+	"use strict";
+	gameScore = _gameScore;
+		$('canvas').setLayer('game', {visible: true, text: gameScore }).setLayer('gameScoreRect', { visible: true}).setLayerGroup('gameChoice501', { visible: false}).setLayerGroup('gameChoice301', { visible: false});
+}
+function chooseGameType() {
+	"use strict";
+	
+	$('canvas').setLayer('game', {visible: false}).setLayer('gameScoreRect', { visible: false}).setLayerGroup('gameChoice501', { visible: true}).setLayerGroup('gameChoice301', { visible: true});
+	
 }
 function resizeCanvas() {
     //resize the dartboard on the canvas to match the viewport size.    
@@ -549,13 +562,65 @@ function draw() {
 		height: 50,
 		cornerRadius: 10,
 		layer: true,
-		groups: ['gameScore']
+		name: 'gameScoreRect',
+		groups: ['gameScore'],
+		click: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+			chooseGameType();
+		}
 	});
 	$('canvas').drawRect({
 		fillStyle: 'black',
-		x: canvas.width - 150,
+		x: canvas.width - 100,
+		y: 145,
+		width: 100,
+		height: 40,
+		cornerRadius: 10,
+		layer: true,
+		name: 'gameScoreRect501',
+		groups: ['gameChoice501'],
+		visible: false,
+		click: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+		changeGameType(501);
+		}
+	});
+	$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 100,
+		y: 125,
+		width: 100,
+		height: 40,
+		cornerRadius: 10,
+		layer: true,
+		name: 'gameScoreRect301',
+		groups: ['gameChoice301'],
+		visible: false,
+		click: function (layer) {
+			$(this).animateLayer(layer, {
+				fillStyle: '#ccc'
+			}, fadeSpeed);
+			$(this).animateLayer(layer, {
+				fillStyle: 'black'
+			}, fadeSpeed);
+			changeGameType(301);
+		}
+	});
+	$('canvas').drawRect({
+		fillStyle: 'black',
+		x: canvas.width - 130,
 		y: 250,
-		width: 220,
+		width: 210,
 		height: 50,
 		cornerRadius: 10,
 		layer: true,
@@ -565,6 +630,10 @@ function draw() {
 	makeText('reset', canvas.width - 100, 45, 0, 'reset');
 	makeText('add', canvas.width - 100, 100, 0, 'add');
 	makeText('game', canvas.width - 100, 155, 0, 'gameScore');
+	makeText('501', canvas.width - 100, 125, 0, 'gameChoice501');
+	makeText('301', canvas.width - 100, 155, 0, 'gameChoice301');
+	$('canvas').setLayerGroup('gameChoice501', { visible: false}).setLayerGroup('gameChoice301', { visible: false});
+	
 	makeText('dartOut', canvas.width - 150, 250, 0, 'dartOutDisp');
 	$('canvas').drawRect({
 		fillStyle: 'black',
@@ -594,6 +663,7 @@ $(document).ready(function () {
 	"use strict";
 	draw();
 });
+	
 
 function initialize() {
 	"use strict";
