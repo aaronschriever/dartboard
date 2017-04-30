@@ -352,9 +352,7 @@ function createSegments() {
 	}
 	i = 0;
 }
-/*
-* Create the bull!
-*/
+
 function createDartboardBorder() {
 	"use strict";
 	$('canvas').drawArc({
@@ -382,7 +380,9 @@ function createDartboardBorder() {
 		}
 	});
 }
-
+/*
+* Create the bull!
+*/
 function createBullseye() {
 	"use strict";
 	
